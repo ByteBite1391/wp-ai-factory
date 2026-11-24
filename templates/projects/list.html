@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}پروژه‌ها{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1 class="page-title">پروژه‌ها</h1>
+  <a class="btn" href="{{ url_for('projects.create') }}">پروژه جدید</a>
+</div>
+<form class="card search" method="get">
+  <input type="text" name="q" value="{{ q }}" placeholder="جست‌وجو در پروژه‌ها">
+  <select name="status">
+    <option value="">همه</option>
+    {% for st in ['draft','requirements','architecture','generating','completed'] %}
+      <option value="{{ st }}" {% if status==st %}selected{% endif %}>{{ st }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn">فیلتر</button>
+</form>
+
+{% if projects %}
+<div class="card">
+<table class="table">
+  <thead><tr><th>نام</th><th>نوع</th><th>وضعیت</th><th>معماری</th><th>عملیات</th></tr></thead>
+  <tbody>
+  {% for p in projects %}
+    <tr>
+      <td><a href="{{ url_for('projects.detail', project_id=p.id) }}">{{ p.name }}</a></td>
+      <td>{{ p.project_type }}</td>
+      <td><span class="badge">{{ p.status }}</span></td>
+      <td>{% if p.architecture_approved %}<span class="ok">تأییدشده</span>{% else %}<span class="muted">در انتظار</span>{% endif %}</td>
+      <td class="actions">
+        <a class="btn-sm" href="{{ url_for('projects.edit', project_id=p.id) }}">ویرایش</a>
+        <form method="post" action="{{ url_for('projects.duplicate', project_id=p.id) }}" style="display:inline">
+          <button class="btn-sm" type="submit">کپی</button>
+        </form>
+        <form method="post" action="{{ url_for('projects.delete', project_id=p.id) }}" style="display:inline" onsubmit="return confirm('حذف شود؟')">
+          <button class="btn-sm danger" type="submit">حذف</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}<div class="card muted">پروژه‌ای یافت نشد.</div>{% endif %}
+{% endblock %}

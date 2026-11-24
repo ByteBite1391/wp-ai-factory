@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ p.name }}{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1 class="page-title">{{ p.name }}</h1>
+  <div class="actions">
+    <a class="btn" href="{{ url_for('projects.edit', project_id=p.id) }}">ویرایش</a>
+    <a class="btn" href="{{ url_for('prompts.index', project_id=p.id) }}">پرامپت‌ها</a>
+    <a class="btn" href="{{ url_for('imports.index', project_id=p.id) }}">Import</a>
+    <a class="btn" href="{{ url_for('files.index', project_id=p.id) }}">فایل‌ها</a>
+    <a class="btn" href="{{ url_for('exports.index', project_id=p.id) }}">خروجی</a>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>اطلاعات پروژه</h3>
+    <p><b>نوع:</b> {{ p.project_type }}</p>
+    <p><b>زبان:</b> {{ p.website_language }}</p>
+    <p><b>نسخه وردپرس:</b> {{ p.wordpress_version }}</p>
+    <p><b>وضعیت:</b> <span class="badge">{{ p.status }}</span></p>
+    <p><b>معماری:</b> {% if p.architecture_approved %}<span class="ok">تأییدشده</span>{% else %}<span class="muted">تأیید نشده</span>{% endif %}</p>
+    <a class="btn-sm" href="{{ url_for('projects.architecture', project_id=p.id) }}">مدیریت معماری</a>
+  </div>
+
+  <div class="card">
+    <h3>قابلیت‌ها</h3>
+    <div class="chips">
+      {% for f in p.feature_list() %}<span class="chip">{{ f }}</span>{% endfor %}
+    </div>
+    <h3 style="margin-top:16px">صفحات</h3>
+    <div class="chips">
+      {% for pg in p.page_list() %}<span class="chip">{{ pg }}</span>{% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>نیازمندی‌های مشتری</h3>
+  <p style="white-space:pre-wrap">{{ p.customer_requirements or '—' }}</p>
+</div>
+
+<div class="card">
+  <h3>آخرین فعالیت‌ها</h3>
+  {% for a in activities %}
+    <div class="activity"><b>{{ a.action }}</b> — {{ a.detail }} <span class="muted">{{ a.created_at.strftime('%Y-%m-%d %H:%M') }}</span></div>
+  {% else %}<p class="muted">فعالیتی نیست.</p>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="text-align:center;padding:60px">
+  <h1 style="color:#D4AF37;font-size:48px">{{ code }}</h1>
+  <p>{{ message }}</p>
+  <a class="btn" href="{{ url_for('dashboard.index') }}">بازگشت</a>
+</div>
+{% endblock %}

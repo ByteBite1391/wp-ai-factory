@@ -1,0 +1,205 @@
+# ============================================
+# Python .gitignore (Professional)
+# ============================================
+
+# ---------- Byte-compiled / optimized files ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ---------- Distribution / packaging ----------
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+*.manifest
+*.spec
+
+# ---------- PyInstaller ----------
+# معمولاً *.spec را نگه می‌دارند، اگر نمی‌خواهید حذف کنید خط بالا را پاک کنید
+
+# ---------- Unit test / coverage ----------
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ---------- Translations ----------
+*.mo
+*.pot
+
+# ---------- Django ----------
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# ---------- Flask ----------
+instance/
+.webassets-cache
+
+# ---------- Scrapy ----------
+.scrapy
+
+# ---------- Sphinx documentation ----------
+docs/_build/
+doc/_build/
+
+# ---------- PyBuilder ----------
+target/
+
+# ---------- Jupyter Notebook ----------
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+*.ipynb_checkpoints
+
+# ---------- pyenv ----------
+.python-version
+
+# ---------- pipenv / poetry / pdm ----------
+# (فایل‌های قفل معمولاً باید commit شوند، پس آن‌ها را ignore نمی‌کنیم)
+# Pipfile.lock / poetry.lock / pdm.lock نباید ignore شوند
+__pypackages__/
+
+# ---------- Celery ----------
+celerybeat-schedule
+celerybeat.pid
+
+# ---------- SageMath ----------
+*.sage.py
+
+# ---------- Environments ----------
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+venv
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# ---------- Spyder ----------
+.spyderproject
+.spyproject
+
+# ---------- Rope ----------
+.ropeproject
+
+# ---------- mkdocs ----------
+/site
+
+# ---------- mypy ----------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ---------- Pyre ----------
+.pyre/
+
+# ---------- pytype ----------
+.pytype/
+
+# ---------- Cython ----------
+cython_debug/
+
+# ---------- Ruff ----------
+.ruff_cache/
+
+# ---------- Editors / IDEs ----------
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+
+# PyCharm / JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# ---------- OS generated files ----------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ---------- Logs & databases ----------
+*.log
+logs/
+*.sqlite
+*.sqlite3
+*.db
+
+# ---------- Secrets & credentials ----------
+*.pem
+*.key
+*.crt
+secrets/
+credentials/
+*.secret
+
+# ---------- Docker ----------
+# اگر از docker-compose استفاده می‌کنید، .env را ignore نکنید مگر اینکه مقادیر حساس دارد
+
+# ---------- Misc ----------
+*.bak
+*.tmp
+*.temp
+*.orig
+*.rej
+.cache/
+tmp/

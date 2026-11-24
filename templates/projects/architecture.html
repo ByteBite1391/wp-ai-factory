@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}معماری {{ p.name }}{% endblock %}
+{% block content %}
+<h1 class="page-title">معماری سایت — {{ p.name }}</h1>
+<form method="post" class="card form">
+  <label>صفحات (هر خط یک صفحه)
+    <textarea name="pages" rows="8">{{ (arch.get('website') or [])|join('\n') }}</textarea>
+  </label>
+  <label>قابلیت‌ها (هر خط یک قابلیت)
+    <textarea name="features" rows="8">{{ (arch.get('features') or [])|join('\n') }}</textarea>
+  </label>
+  <button class="btn" type="submit">تأیید و ذخیره معماری</button>
+</form>
+{% endblock %}

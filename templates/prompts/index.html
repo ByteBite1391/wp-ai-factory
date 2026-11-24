@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}پرامپت‌ها{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1 class="page-title">پرامپت‌های پروژه {{ p.name }}</h1>
+  <a class="btn" href="{{ url_for('projects.detail', project_id=p.id) }}">بازگشت</a>
+</div>
+
+<form method="post" class="card form">
+  <label>مرحله
+    <select name="stage">
+      {% for key, title in stages %}
+        <option value="{{ key }}" {% if selected==key %}selected{% endif %}>{{ title }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button class="btn" type="submit">تولید پرامپت</button>
+</form>
+
+{% if prompt_text %}
+<div class="card">
+  <div class="row-between">
+    <h3>پرامپت تولیدشده</h3>
+    <button class="btn-sm" data-copy="#prompt-box">کپی</button>
+  </div>
+  <pre id="prompt-box" class="code">{{ prompt_text }}</pre>
+</div>
+{% endif %}
+
+<div class="card">
+  <h3>تاریخچه پرامپت‌ها</h3>
+  {% for h in history %}
+    <details class="history">
+      <summary>{{ h.stage }} — {{ h.created_at.strftime('%Y-%m-%d %H:%M') }}</summary>
+      <pre class="code">{{ h.prompt_text }}</pre>
+    </details>
+  {% else %}<p class="muted">هنوز پرامپتی تولید نشده.</p>{% endfor %}
+</div>
+{% endblock %}

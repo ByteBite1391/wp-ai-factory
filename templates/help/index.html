@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}راهنما{% endblock %}
+{% block content %}
+<h1 class="page-title">مرکز راهنما</h1>
+<form class="card search" method="get">
+  <input type="text" name="q" value="{{ q }}" placeholder="جست‌وجو در مقالات">
+  <button class="btn">جست‌وجو</button>
+</form>
+
+{% if q %}
+  <div class="card">
+    <h3>نتایج</h3>
+    {% for r in results %}
+      <a class="help-link" href="{{ url_for('help.article', slug=r.slug) }}">{{ r.title }}</a>
+    {% else %}<p class="muted">نتیجه‌ای نیست.</p>{% endfor %}
+  </div>
+{% endif %}
+
+<div class="grid-3">
+{% for c in cats %}
+  <div class="card">
+    <h3>{{ c.name }}</h3>
+    <ul class="list">
+    {% for a in c.articles %}
+      <li><a href="{{ url_for('help.article', slug=a.slug) }}">{{ a.title }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ art.title }}{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1 class="page-title">{{ art.title }}</h1>
+  <a class="btn" href="{{ url_for('help.index') }}">بازگشت</a>
+</div>
+<div class="grid-sidebar">
+  <div class="card">
+    <p style="white-space:pre-wrap;line-height:2">{{ art.content }}</p>
+  </div>
+  <div class="card">
+    <h3>مقالات مرتبط</h3>
+    <ul class="list">
+    {% for a in art.category.articles if a.id != art.id %}
+      <li><a href="{{ url_for('help.article', slug=a.slug) }}">{{ a.title }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

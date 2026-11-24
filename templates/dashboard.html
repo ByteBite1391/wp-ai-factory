@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}داشبورد{% endblock %}
+{% block content %}
+<h1 class="page-title">داشبورد</h1>
+<div class="grid-3">
+  <div class="card stat"><span>کل پروژه‌ها</span><strong>{{ s.total }}</strong></div>
+  <div class="card stat"><span>پروژه‌های فعال</span><strong>{{ s.active }}</strong></div>
+  <div class="card stat"><span>تکمیل‌شده</span><strong>{{ s.completed }}</strong></div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3>آخرین پروژه‌ها</h3>
+    {% if s.recent %}
+      <ul class="list">
+      {% for p in s.recent %}
+        <li><a href="{{ url_for('projects.detail', project_id=p.id) }}">{{ p.name }}</a>
+        <span class="muted">{{ p.status }}</span></li>
+      {% endfor %}
+      </ul>
+    {% else %}<p class="muted">هنوز پروژه‌ای نیست.</p>{% endif %}
+  </div>
+  <div class="card">
+    <h3>آخرین فعالیت‌ها</h3>
+    {% if s.activities %}
+      <ul class="list">
+      {% for a in s.activities %}
+        <li>{{ a.action }} <span class="muted">{{ a.detail }}</span></li>
+      {% endfor %}
+      </ul>
+    {% else %}<p class="muted">فعالیتی ثبت نشده.</p>{% endif %}
+  </div>
+</div>
+<div class="card" style="text-align:center">
+  <h3>شروع سریع</h3>
+  <a class="btn" href="{{ url_for('projects.create') }}">ایجاد پروژه جدید</a>
+</div>
+{% endblock %}

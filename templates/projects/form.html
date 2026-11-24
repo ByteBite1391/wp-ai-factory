@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ 'ویرایش' if project else 'پروژه جدید' }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ 'ویرایش پروژه' if project else 'پروژه جدید' }}</h1>
+<form method="post" class="card form">
+  <label>نام پروژه
+    <input type="text" name="name" required value="{{ project.name if project else '' }}">
+  </label>
+  <label>نوع سایت
+    <select name="project_type">
+      {% for t in types %}
+        <option value="{{ t }}" {% if project and project.project_type==t %}selected{% endif %}>{{ t }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <label>زبان سایت
+    <select name="website_language">
+      <option value="fa" {% if project and project.website_language=='fa' %}selected{% endif %}>فارسی</option>
+      <option value="en" {% if project and project.website_language=='en' %}selected{% endif %}>انگلیسی</option>
+      <option value="ar" {% if project and project.website_language=='ar' %}selected{% endif %}>عربی</option>
+    </select>
+  </label>
+  <label>نسخه وردپرس
+    <input type="text" name="wordpress_version" value="{{ project.wordpress_version if project else '6.5' }}">
+  </label>
+  <label>توضیحات مشتری (نیازمندی‌ها)
+    <textarea name="customer_requirements" rows="6">{{ project.customer_requirements if project else '' }}</textarea>
+  </label>
+  <label>سلیقه طراحی
+    <textarea name="design_preferences" rows="3">{{ project.design_preferences if project else '' }}</textarea>
+  </label>
+
+  <fieldset>
+    <legend>قابلیت‌های موردنیاز</legend>
+    <div class="checks">
+    {% for f in all_features %}
+      <label class="check"><input type="checkbox" name="features" value="{{ f }}"
+        {% if project and f in project.feature_list() %}checked{% endif %}> {{ f }}</label>
+    {% endfor %}
+    </div>
+  </fieldset>
+
+  <label>صفحات موردنیاز (هر خط یک صفحه)
+    <textarea name="pages" rows="5">{{ (project.page_list()|join('\n')) if project else 'Homepage\nAbout\nContact' }}</textarea>
+  </label>
+
+  <button class="btn" type="submit">ذخیره</button>
+</form>
+{% endblock %}

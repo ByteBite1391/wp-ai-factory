@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}فایل‌ها{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1 class="page-title">فایل‌ها — {{ p.name }}</h1>
+  <div class="actions">
+    <form method="post" action="{{ url_for('files.backup', project_id=p.id) }}" style="display:inline">
+      <button class="btn-sm">تهیه نسخه پشتیبان</button>
+    </form>
+  </div>
+</div>
+
+{% macro render_tree(node) %}
+  <ul class="tree">
+  {% for child in node.children %}
+    {% if child.type == 'dir' %}
+      <li><details open><summary>{{ child.name }}</summary>{{ render_tree(child) }}</details></li>
+    {% else %}
+      <li><a href="{{ url_for('files.index', project_id=p.id, path=child.rel) }}">{{ child.name }}</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+{% endmacro %}
+
+<div class="grid-sidebar">
+  <div class="card tree-card">
+    <h3>درخت فایل‌ها</h3>
+    {{ render_tree(tree) }}
+  </div>
+  <div class="card">
+    {% if current %}
+      <h3>{{ current }}</h3>
+      <form method="post" action="{{ url_for('files.save', project_id=p.id) }}">
+        <input type="hidden" name="path" value="{{ current }}">
+        <textarea name="content" rows="20" class="code-area">{{ content }}</textarea>
+        <button class="btn">ذخیره</button>
+      </form>
+      <form method="post" action="{{ url_for('files.delete', project_id=p.id) }}" onsubmit="return confirm('حذف شود؟')">
+        <input type="hidden" name="path" value="{{ current }}">
+        <button class="btn-sm danger">حذف فایل</button>
+      </form>
+    {% else %}
+      <p class="muted">فایلی انتخاب نشده است.</p>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <h3>نسخه‌های پشتیبان</h3>
+  {% if backups %}
+  <table class="table">
+    <thead><tr><th>زمان</th><th>بازیابی</th></tr></thead>
+    <tbody>
+    {% for b in backups %}
+      <tr><td>{{ b }}</td>
+      <td>
+        <form method="post" action="{{ url_for('files.restore', project_id=p.id) }}">
+          <input type="hidden" name="name" value="{{ b }}">
+          <button class="btn-sm">بازیابی</button>
+        </form>
+      </td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="muted">نسخه‌ای نیست.</p>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Import{% endblock %}
+{% block content %}
+<div class="row-between">
+  <h1 class="page-title">وارد کردن پاسخ DeepSeek — {{ p.name }}</h1>
+  <a class="btn" href="{{ url_for('projects.detail', project_id=p.id) }}">بازگشت</a>
+</div>
+
+<form method="post" class="card form">
+  <label>پاسخ JSON را اینجا Paste کنید
+    <textarea name="raw" rows="14" placeholder="&#123;&quot;project_id&quot;: ...&#125;"></textarea>
+  </label>
+  <button class="btn" type="submit">Import پاسخ</button>
+</form>
+
+{% if result %}
+<div class="card">
+  <h3>نتیجه</h3>
+  {% if result.ok %}
+    <p class="ok">تعداد فایل نوشته‌شده: {{ result.written|length }}</p>
+    {% if result.partial %}<p class="warn">پاسخ ناقص است؛ می‌توانید ادامه دهید.</p>{% endif %}
+    <ul class="list">{% for w in result.written %}<li>{{ w }}</li>{% endfor %}</ul>
+  {% else %}
+    <p class="err">خطا:</p>
+    <ul class="list">{% for e in result.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="card">
+  <h3>تاریخچه Import</h3>
+  <table class="table">
+    <thead><tr><th>تاریخ</th><th>Batch</th><th>وضعیت</th><th>فایل‌ها</th></tr></thead>
+    <tbody>
+    {% for h in history %}
+      <tr><td>{{ h.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td>{{ h.batch_id or '-' }}</td>
+          <td>{{ h.status }}</td>
+          <td>{{ h.files_count }}</td></tr>
+    {% else %}<tr><td colspan="4" class="muted">خالی</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
