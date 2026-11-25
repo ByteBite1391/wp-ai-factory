@@ -203,3 +203,6 @@ credentials/
 *.rej
 .cache/
 tmp/
+
+# wordspace
+workspace
